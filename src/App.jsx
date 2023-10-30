@@ -5,7 +5,9 @@ import { IncompleteTodos } from "./components/IncompleteTodos";
 import { CompleteTodos } from "./components/CompleteTodos";
 
 export const App = () => {
+  
   const [todoText, setTodoText] = useState("");
+  const [priotity, setPriotity] = useState("-");
   const [incompleteTodos, setIncompleteTodos] = useState([]);
   const [completeTodos, setCompleteTodos] = useState([]);
 
@@ -13,18 +15,23 @@ export const App = () => {
 
   const onClickAdd = () => {
     if (todoText == "") return;
-    const newTodos = [...incompleteTodos, todoText];
+    const todo = {
+      text: todoText,
+      priotity: priotity,
+    }
+    const newTodos = [...incompleteTodos, todo];
     setIncompleteTodos(newTodos);
     setTodoText("");
+    setPriotity("-");
   };
 
-  const onClicDelete = (index) => {
+  const onClickDelete = (index) => {
     const newTodos = [...incompleteTodos];
     newTodos.splice(index, 1);
     setIncompleteTodos(newTodos);
   };
 
-  const onClicComplete = (index) => {
+  const onClickComplete = (index) => {
     const newIncompleteTodos = [...incompleteTodos];
     newIncompleteTodos.splice(index, 1);
 
@@ -44,31 +51,50 @@ export const App = () => {
     setIncompleteTodos(newIncompleteTodos);
   };
 
+  const handleSortClick = () => {
+    const sortTodos = [...incompleteTodos];
+    sortTodos.sort((a, b) => {
+      if (a.priotity === "-" && b.priotity !== "-") return 1;
+      if (a.priotity !== "-" && b.priotity === "-") return -1;
+      if (a.priotity === "高" && b.priotity !== "高") return -1;
+      if (a.priotity !== "高" && b.priotity === "高") return 1;
+      if (a.priotity === "中" && b.priotity === "低") return -1;
+      if (a.priotity === "低" && b.priotity === "中") return 1;
+      return 0; 
+    })
+    setIncompleteTodos(sortTodos);
+  }
+
   return (
     <>
       <InputTodo
         todoText={todoText}
+        priotity={priotity}
+        setPriotity={setPriotity}
         onChange={onChangeTodoText}
         onClick={onClickAdd}
-        disabled={incompleteTodos.length >= 5}
+        disabled={incompleteTodos.length >= 10}
       />
 
-      {incompleteTodos.length >= 5 && (
+      
+
+      {incompleteTodos.length >= 10 && (
         <p style={{ color: "red" }}>
-          登録できるTODO5個までだよ～。消化しろ～。
+          登録できるTODO10個まで！
         </p>
       )}
 
       <IncompleteTodos
         todos={incompleteTodos}
-        onClicComplete={onClicComplete}
-        onClicDelete={onClicDelete}
+        onClickComplete={onClickComplete}
+        onClickDelete={onClickDelete}
+        handleSortClick={handleSortClick}
       />
 
       <CompleteTodos
         todos={completeTodos}
         onClickBack={onClickBack}
-        disabled={incompleteTodos.length >= 5}
+        disabled={incompleteTodos.length >= 10}
       />
     </>
   );

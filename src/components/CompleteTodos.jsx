@@ -9,9 +9,10 @@ export const CompleteTodos = (props) => {
       <ul>
         {todos.map((todo, index) => {
           return (
-            <li key={todo}>
+            <li key={index}>
               <div className="list-row">
-                <p>{todo}</p>
+                <p>{todo.text}</p>
+                <p>{todo.priotity}</p>
                 <button disabled={disabled} onClick={() => onClickBack(index)}>
                   戻す
                 </button>
