@@ -65,6 +65,8 @@ export const App = () => {
     setIncompleteTodos(sortTodos);
   }
 
+
+
   return (
     <>
       <InputTodo

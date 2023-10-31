@@ -12,7 +12,6 @@ export const CompleteTodos = (props) => {
             <li key={index}>
               <div className="list-row">
                 <p>{todo.text}</p>
-                <p>{todo.priotity}</p>
                 <button disabled={disabled} onClick={() => onClickBack(index)}>
                   戻す
                 </button>

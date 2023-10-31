@@ -1,16 +1,22 @@
 import React from "react";
 
 export const InputTodo = (props) => {
-  const { todoText, onChange, onClick, disabled, priotity, setPriotity } = props;
+  const { todoText, onChange, onClick, disabled, priotity, setPriotity } =
+    props;
   return (
     <div className="input-area">
       <input
+        style={{ marginRight: "8px" }}
         disabled={disabled}
         placeholder="TODOを入力"
         value={todoText}
         onChange={onChange}
       />
-      <select value={priotity} onChange={(event) => setPriotity(event.target.value)}>
+      <label style={{ fontSize: "0.8em" }}>優先順位</label>
+      <select
+        value={priotity}
+        onChange={(event) => setPriotity(event.target.value)}
+      >
         <option value={"-"}>-</option>
         <option value={"高"}>高</option>
         <option value={"中"}>中</option>
